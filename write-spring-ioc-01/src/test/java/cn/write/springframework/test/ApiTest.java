@@ -1,6 +1,6 @@
 package cn.write.springframework.test;
 
-import cn.write.springframework.BeanDefinition;
+import cn.write.springframework.beans.factory.config.BeanDefinition;
 import cn.write.springframework.BeanFactory;
 import cn.write.springframework.test.bean.UserService;
 import org.junit.jupiter.api.Test;
