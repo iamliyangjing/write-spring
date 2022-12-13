@@ -1,4 +1,4 @@
-package cn.write.springframework;
+package cn.write.springframework.beans.factory;
 
 import cn.write.springframework.beans.factory.config.BeanDefinition;
 

@@ -1,7 +1,7 @@
 package cn.write.springframework.beans.factory.support;
 
 
-import cn.write.springframework.BeanFactory;
+import cn.write.springframework.beans.factory.BeanFactory;
 import cn.write.springframework.beans.BeansException;
 import cn.write.springframework.beans.factory.config.BeanDefinition;
 
