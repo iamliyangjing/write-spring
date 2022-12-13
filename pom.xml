@@ -8,11 +8,7 @@
     <artifactId>write-spring</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>write-spring-ioc-01</module>
-    </modules>
 
-    <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -26,7 +22,7 @@
                 <scope>test</scope>
             </dependency>
         </dependencies>
-    </dependencyManagement>
+
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
