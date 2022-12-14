@@ -1,4 +1,4 @@
-package cn.write.springframework;
+package cn.write.springframework.beans.factory;
 
 import cn.write.springframework.beans.factory.config.BeanDefinition;
 
@@ -16,6 +16,14 @@ public interface BeanFactory {
     //用一个map存储BeanDefinition
 
     public Object getBean(String name);
+    /**
+     * 有参构造函数
+     * @param name
+     * @param args
+     * @return
+     */
+    public Object getBean(String name,Object... args);
+
     public void registerBeanDefinition(String name, BeanDefinition beanDefinition);
 
 }
