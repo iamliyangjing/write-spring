@@ -6,5 +6,7 @@ package cn.write.springframework.beans.factory;
  * @author: lyj
  * @create: 2022-12-14 16:43
  **/
-public class DisposableBean {
+public interface DisposableBean {
+    void destroy() throws Exception;
+
 }

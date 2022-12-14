@@ -1,23 +1,36 @@
 package cn.write.springframework.test.bean;
 
+import cn.write.springframework.beans.factory.DisposableBean;
+import cn.write.springframework.beans.factory.InitializingBean;
+
 /**
  * @program: write-spring
  * @description:
  * @author: lyj
  * @create: 2022-12-13 17:38
  **/
-public class UserService {
-
-
+public class UserService implements InitializingBean, DisposableBean {
 
     private String uId;
     private String company;
     private String location;
     private UserDao userDao;
 
-    public String queryUserInfo() {
-        return userDao.queryUserName(uId)+", 公司："+company+", 地点"+location;
+    @Override
+    public void destroy() throws Exception {
+        System.out.println("执行：UserService.destroy");
     }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println("执行：UserService.afterPropertiesSet");
+    }
+
+    public String queryUserInfo() {
+        return userDao.queryUserName(uId) + "," + company + "," + location;
+    }
+
+    // ...get/set
 
     public String getuId() {
         return uId;
