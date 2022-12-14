@@ -7,6 +7,7 @@ import cn.write.springframework.beans.factory.config.BeanDefinition;
 import cn.write.springframework.beans.factory.config.BeanReference;
 import cn.write.springframework.beans.factory.support.DefaultListableBeanFactory;
 import cn.write.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+import cn.write.springframework.context.ApplicationContext;
 import cn.write.springframework.context.support.ClassPathXmlApplicationContext;
 import cn.write.springframework.core.io.DefaultResourceLoader;
 import cn.write.springframework.core.io.Resource;
@@ -153,5 +154,22 @@ public class ApiTest {
         String result = userService.queryUserInfo();
         System.out.println("测试结果：" + result);
     }
+
+    @Test
+    public void test_xml2() {
+        // 1.初始化 BeanFactory
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
+        applicationContext.registerShutdownHook();
+
+        // 2. 获取Bean对象调用方法
+        UserService userService = applicationContext.getBean("userService", UserService.class);
+        String result = userService.queryUserInfo();
+        System.out.println("测试结果：" + result);
+        System.out.println("ApplicationContextAware："+userService.getApplicationContext());
+        ApplicationContext applicationContext1 = userService.getApplicationContext();
+        System.out.println(applicationContext1.getBean("userDao"));
+        System.out.println("BeanFactoryAware："+userService.getBeanFactory());
+    }
+
 
 }
