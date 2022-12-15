@@ -1,6 +1,8 @@
 package cn.write.springframework.context;
 
+import cn.write.springframework.beans.factory.HierarchicalBeanFactory;
 import cn.write.springframework.beans.factory.ListableBeanFactory;
+import cn.write.springframework.core.io.ResourceLoader;
 
 /**
  * @program: write-spring
@@ -9,5 +11,5 @@ import cn.write.springframework.beans.factory.ListableBeanFactory;
  * @author: lyj
  * @create: 2022-12-14 14:12
  **/
-public interface ApplicationContext  extends ListableBeanFactory {
+public interface ApplicationContext  extends ListableBeanFactory, HierarchicalBeanFactory, ResourceLoader, ApplicationEventPublisher {
 }

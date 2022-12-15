@@ -15,6 +15,7 @@ import cn.write.springframework.test.bean.UserDao;
 import cn.write.springframework.test.bean.UserService;
 import cn.write.springframework.test.common.MyBeanFactoryPostProcessor;
 import cn.write.springframework.test.common.MyBeanPostProcessor;
+import cn.write.springframework.test.event.CustomEvent;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -202,6 +203,19 @@ public class ApiTest {
         UserService userService = applicationContext.getBean("userService", UserService.class);
         System.out.println("测试结果：" + userService.queryUserInfo());
     }
+
+
+
+        @Test
+        public void test_event() {
+            ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
+            //发布事件
+            applicationContext.publishEvent(new CustomEvent(applicationContext, 1019129009086763L, "成功了！"));
+
+            applicationContext.registerShutdownHook();
+        }
+
+
 
 
 
