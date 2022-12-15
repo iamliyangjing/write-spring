@@ -11,6 +11,7 @@ import cn.write.springframework.context.ApplicationContext;
 import cn.write.springframework.context.support.ClassPathXmlApplicationContext;
 import cn.write.springframework.core.io.DefaultResourceLoader;
 import cn.write.springframework.core.io.Resource;
+import cn.write.springframework.test.aop.beans.IUserService;
 import cn.write.springframework.test.bean.UserDao;
 import cn.write.springframework.test.bean.UserService;
 import cn.write.springframework.test.common.MyBeanFactoryPostProcessor;
@@ -112,7 +113,7 @@ public class ApiTest {
 
         // 2. 读取配置文件&注册Bean
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinitions("classpath:spring.xml");
+        reader.loadBeanDefinitions("classpath:spring-property.xml");
 
         // 3. 获取Bean对象调用方法
         UserService userService = (UserService) beanFactory.getBean("userService", UserService.class);
@@ -127,7 +128,7 @@ public class ApiTest {
 
         // 2. 读取配置文件&注册Bean
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinitions("src/test/resources/spring.xml");
+        reader.loadBeanDefinitions("src/test/resources/spring-property.xml");
 
         // 3. BeanDefinition 加载完成 & Bean实例化之前，修改 BeanDefinition 的属性值
         MyBeanFactoryPostProcessor beanFactoryPostProcessor = new MyBeanFactoryPostProcessor();
@@ -147,7 +148,7 @@ public class ApiTest {
     @Test
     public void test_xml1() {
         // 1.初始化 BeanFactory
-        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-property.xml");
         applicationContext.registerShutdownHook();
 
         // 2. 获取Bean对象调用方法
@@ -159,7 +160,7 @@ public class ApiTest {
 //    @Test
 //    public void test_xml2() {
 //        // 1.初始化 BeanFactory
-//        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
+//        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-property.xml");
 //        applicationContext.registerShutdownHook();
 //
 //        // 2. 获取Bean对象调用方法
@@ -176,7 +177,7 @@ public class ApiTest {
     @Test
     public void test_prototype() {
         // 1.初始化 BeanFactory
-        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-property.xml");
         applicationContext.registerShutdownHook();
 
         // 2. 获取Bean对象调用方法
@@ -196,7 +197,7 @@ public class ApiTest {
     @Test
     public void test_factory_bean() {
         // 1.初始化 BeanFactory
-        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-property.xml");
         applicationContext.registerShutdownHook();
 
         // 2. 调用代理方法
@@ -208,7 +209,7 @@ public class ApiTest {
 
         @Test
         public void test_event() {
-            ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
+            ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-property.xml");
             //发布事件
             applicationContext.publishEvent(new CustomEvent(applicationContext, 1019129009086763L, "成功了！"));
 
@@ -216,7 +217,19 @@ public class ApiTest {
         }
 
 
+    @Test
+    public void test_property() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-property.xml");
+        IUserService userService = applicationContext.getBean("userService", IUserService.class);
+        System.out.println("测试结果：" + userService);
+    }
 
+    @Test
+    public void test_scan() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-scan.xml");
+        IUserService userService = applicationContext.getBean("userService", IUserService.class);
+        System.out.println("测试结果：" + userService.queryUserInfo());
+    }
 
 
 }
