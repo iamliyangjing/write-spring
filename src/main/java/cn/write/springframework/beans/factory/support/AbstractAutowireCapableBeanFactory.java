@@ -6,10 +6,7 @@ import cn.write.springframework.beans.BeansException;
 import cn.write.springframework.beans.PropertyValue;
 import cn.write.springframework.beans.PropertyValues;
 import cn.write.springframework.beans.factory.*;
-import cn.write.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import cn.write.springframework.beans.factory.config.BeanDefinition;
-import cn.write.springframework.beans.factory.config.BeanPostProcessor;
-import cn.write.springframework.beans.factory.config.BeanReference;
+import cn.write.springframework.beans.factory.config.*;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -27,6 +24,13 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     protected Object createBean(String beanName, BeanDefinition beanDefinition,Object[] args) throws BeansException {
         Object bean = null;
         try {
+
+            //判断是否返回代理 Bean 对象
+            bean = resolveBeforeInstantiation(beanName,beanDefinition);
+            if (null!=bean){
+                return bean;
+            }
+
             bean = createBeanInstance(beanDefinition,beanName,args);
             //给bean填充 属性
             applyPropertyValues(beanName,bean,beanDefinition);
@@ -138,6 +142,26 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         // 2. 执行 BeanPostProcessor After 处理
         wrappedBean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
         return wrappedBean;
+    }
+
+
+    protected Object resolveBeforeInstantiation(String beanName, BeanDefinition beanDefinition) {
+        Object bean = applyBeanPostProcessorBeforeInstantiation(beanDefinition.getBeanClass(), beanName);
+        if (null != bean) {
+            bean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
+        }
+        return bean;
+    }
+
+    // 注意，此方法为新增方法，与 “applyBeanPostProcessorBeforeInitialization” 是两个方法
+    public Object applyBeanPostProcessorBeforeInstantiation(Class<?> beanClass, String beanName) throws BeansException {
+        for (BeanPostProcessor processor : getBeanPostProcessors()) {
+            if (processor instanceof InstantiationAwareBeanPostProcessor) {
+                Object result = ((InstantiationAwareBeanPostProcessor)processor).postProcessBeforeInstantiation(beanClass, beanName);
+                if (null != result) return result;
+            }
+        }
+        return null;
     }
 
     @Override
