@@ -1,5 +1,10 @@
 package cn.write.springframework.test.bean;
 
+import cn.write.springframework.beans.BeansException;
+import cn.write.springframework.beans.factory.*;
+import cn.write.springframework.context.ApplicationContext;
+import cn.write.springframework.context.ApplicationContextAware;
+
 /**
  * @program: write-spring
  * @description:
@@ -8,8 +13,44 @@ package cn.write.springframework.test.bean;
  **/
 public class UserService {
 
-    public void queryUserInfo(){
-        System.out.println("查询用户信息");
+    private String uId;
+    private String company;
+    private String location;
+    private IUserDao userDao;
+
+    public String queryUserInfo() {
+        return userDao.queryUserName(uId) + "," + company + "," + location;
     }
 
+    public String getuId() {
+        return uId;
+    }
+
+    public void setuId(String uId) {
+        this.uId = uId;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public IUserDao getUserDao() {
+        return userDao;
+    }
+
+    public void setUserDao(IUserDao userDao) {
+        this.userDao = userDao;
+    }
 }
