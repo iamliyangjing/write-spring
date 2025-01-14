@@ -62,7 +62,7 @@ public class ApiTest {
         // 3. UserService 设置属性[uId、userDao]
         PropertyValues propertyValues = new PropertyValues();
         propertyValues.addPropertyValue(new PropertyValue("uId", "10001"));
-        propertyValues.addPropertyValue(new PropertyValue("userDao",new BeanReference("userDao")));
+        propertyValues.addPropertyValue(new PropertyValue("userDao", new BeanReference("userDao")));
 
         // 4. UserService 注入bean
         BeanDefinition beanDefinition = new BeanDefinition(UserService.class, propertyValues);
@@ -121,7 +121,7 @@ public class ApiTest {
     }
 
     @Test
-    public void test_BeanFactoryPostProcessorAndBeanPostProcessor(){
+    public void test_BeanFactoryPostProcessorAndBeanPostProcessor() {
         // 1.初始化 BeanFactory
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
@@ -205,18 +205,14 @@ public class ApiTest {
     }
 
 
+    @Test
+    public void test_event() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
+        // 发布事件
+        applicationContext.publishEvent(new CustomEvent(applicationContext, 1019129009086763L, "成功了！"));
 
-        @Test
-        public void test_event() {
-            ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring.xml");
-            //发布事件
-            applicationContext.publishEvent(new CustomEvent(applicationContext, 1019129009086763L, "成功了！"));
-
-            applicationContext.registerShutdownHook();
-        }
-
-
-
+        applicationContext.registerShutdownHook();
+    }
 
 
 }
