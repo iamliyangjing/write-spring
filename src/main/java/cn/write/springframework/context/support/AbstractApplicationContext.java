@@ -31,7 +31,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
     @Override
     public void refresh() throws BeansException {
         //1.创建beanFactory，并加载 BeanDefinition
-        refreshBeanFactory();;
+        refreshBeanFactory();
 
         //2.获取BeanFactory
         ConfigurableListableBeanFactory beanFactory = getBeanFactory();
@@ -114,6 +114,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader i
     @Override
     public <T> T getBean(String name, Class<T> requiredType) throws BeansException {
         return getBeanFactory().getBean(name, requiredType);
+    }
+
+    @Override
+    public <T> T getBean(Class<T> requiredType) throws BeansException {
+        return getBeanFactory().getBean(requiredType);
     }
 
     @Override

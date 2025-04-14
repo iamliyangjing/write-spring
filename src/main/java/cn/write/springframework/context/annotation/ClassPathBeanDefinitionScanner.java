@@ -1,6 +1,7 @@
 package cn.write.springframework.context.annotation;
 
 import cn.hutool.core.util.StrUtil;
+import cn.write.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import cn.write.springframework.beans.factory.config.BeanDefinition;
 import cn.write.springframework.beans.factory.support.BeanDefinitionRegistry;
 import cn.write.springframework.stereotype.Component;
@@ -17,22 +18,25 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
 
     private BeanDefinitionRegistry registry;
 
-    public ClassPathBeanDefinitionScanner(BeanDefinitionRegistry registry){
-        this.registry=registry;
+    public ClassPathBeanDefinitionScanner(BeanDefinitionRegistry registry) {
+        this.registry = registry;
     }
 
-    public void doScan(String... basePackages){
+    public void doScan(String... basePackages) {
         for (String basePackage : basePackages) {
             Set<BeanDefinition> candidates = findCandidateComponents(basePackage);
             for (BeanDefinition beanDefinition : candidates) {
-                //解析Bean的作用域 singleton、prototype
+                // 解析 Bean 的作用域 singleton、prototype
                 String beanScope = resolveBeanScope(beanDefinition);
-                if (StrUtil.isNotEmpty(beanScope)){
+                if (StrUtil.isNotEmpty(beanScope)) {
                     beanDefinition.setScope(beanScope);
                 }
-                registry.registerBeanDefinition(determineBeanName(beanDefinition),beanDefinition);
+                registry.registerBeanDefinition(determineBeanName(beanDefinition), beanDefinition);
             }
         }
+
+        // 注册处理注解的 BeanPostProcessor（@Autowired、@Value）
+        registry.registerBeanDefinition("cn.bugstack.springframework.context.annotation.internalAutowiredAnnotationProcessor", new BeanDefinition(AutowiredAnnotationBeanPostProcessor.class));
     }
 
     private String resolveBeanScope(BeanDefinition beanDefinition){
