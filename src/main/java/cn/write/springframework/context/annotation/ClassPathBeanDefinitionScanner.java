@@ -36,7 +36,7 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
         }
 
         // 注册处理注解的 BeanPostProcessor（@Autowired、@Value）
-        registry.registerBeanDefinition("cn.bugstack.springframework.context.annotation.internalAutowiredAnnotationProcessor", new BeanDefinition(AutowiredAnnotationBeanPostProcessor.class));
+        registry.registerBeanDefinition("cn.write.springframework.context.annotation.internalAutowiredAnnotationProcessor", new BeanDefinition(AutowiredAnnotationBeanPostProcessor.class));
     }
 
     private String resolveBeanScope(BeanDefinition beanDefinition){

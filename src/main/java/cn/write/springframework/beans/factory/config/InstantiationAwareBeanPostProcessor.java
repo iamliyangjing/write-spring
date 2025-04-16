@@ -28,7 +28,7 @@ public interface InstantiationAwareBeanPostProcessor extends BeanPostProcessor {
      * Perform operations after the bean has been instantiated, via a constructor or factory method,
      * but before Spring property population (from explicit properties or autowiring) occurs.
      * <p>This is the ideal callback for performing field injection on the given bean instance.
-     * See Spring's own {@link cn.bugstack.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor}
+     * See Spring's own {@link cn.write.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor}
      * for a typical example.
      * <p>
      * 在 Bean 对象执行初始化方法之后，执行此方法
