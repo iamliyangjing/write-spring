@@ -1,5 +1,7 @@
 package cn.write.springframework.aop;
 
+import cn.write.springframework.utils.ClassUtils;
+
 /**
  * @program: write-spring
  * @description: 用来获取当前的目标aop
@@ -14,7 +16,9 @@ public class TargetSource {
         this.target = target;
     }
     public Class<?>[] getTargetClass(){
-        return this.target.getClass().getInterfaces();
+        Class<?> clazz = this.target.getClass();
+        clazz = ClassUtils.isCglibProxyClass(clazz) ? clazz.getSuperclass() : clazz;
+        return clazz.getInterfaces();
     }
     public Object getTarget(){
         return this.target;
